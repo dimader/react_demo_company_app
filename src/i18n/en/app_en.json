@@ -1,0 +1,49 @@
+{
+    "language": "English",
+    "languageChangeButton": "Language",
+ 
+    "sidebar": {
+        "employees": "Employee",
+        "devisions": "Devision",
+        "showAllTableHint": "Show all in table.",
+        "table": "Table",
+        "company": "Company"
+    },
+
+    "company": {
+        "edit": "Edit Company",
+        "name": "Name",
+        "place": "Place",
+        "info": "Info"
+    },
+
+    "employee": {
+        "edit": "Edit Employee",
+        "new": "Create new Employee",
+        "name": "Name",
+        "info": "Info",
+        "position": "Position",
+        "birthdate": "B. Date",
+        "department": "Department",
+        "overview": "Overview Employees"
+    },
+
+    "department": {
+        "edit": "Edit Department",
+        "new": "Create new Department",
+        "name": "Name",
+        "info": "Info",
+        "place": "Place",
+        "overview": "Overview Departments"
+    },
+
+    "form": {
+        "discard": "Discard changes.",
+        "empty": "Form must not be empty.",
+        "fieldEmpty": "Must not be empty.",
+        "fieldLength": "Field has not a correct lenght.",
+        "containsErrors": "Form contains errors, cannot save.",
+        "saveSuccess": "Saved successfully.",
+        "deletedSuccess": "Deleted successfully."
+    }
+}

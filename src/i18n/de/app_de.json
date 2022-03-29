@@ -1,0 +1,49 @@
+{
+    "language": "Deutsch",
+    "languageChangeButton": "Sprache",
+
+    "sidebar": {
+        "employees": "Mitarbeiter",
+        "devisions": "Abteilungen",
+        "showAllTableHint": "Zeige alle in einer Tabelle an.",
+        "table": "Tabelle",
+        "company": "Unternehmen"
+    },
+
+    "company": {
+        "edit": "Firma bearbeiten",
+        "name": "Name",
+        "place": "Ort",
+        "info": "Info"
+    },
+
+    "employee": {
+        "edit": "Mitarbeiter bearbeiten",
+        "new": "Neuen Mitarbeiter anlegen",
+        "name": "Name",
+        "info": "Info",
+        "position": "Position",
+        "birthdate": "Geb. Datum",
+        "department": "Abteilung",
+        "overview": "Übersicht Mitarbeiter"
+    },
+
+    "department": {
+        "edit": "Abteilung bearbeiten",
+        "new": "Neuen Abteilung anlegen",
+        "name": "Name",
+        "info": "Info",
+        "place": "Ort",
+        "overview": "Übersicht Abteilungen"
+    },
+
+    "form": {
+        "discard": "Änderungen verworfen.",
+        "empty": "Felder müssen ausgefüllt werden.",
+        "fieldEmpty": "Darf nicht leer sein.",
+        "fieldLength": "Feld hat nicht die richtige Länge.",
+        "containsErrors": "Fehler auf der Form vorhanden, kann nicht gespeichert werden.",
+        "saveSuccess": "Erfolgreich gespeichert.",
+        "deletedSuccess": "Erfolgreich gelöscht."
+    }
+}

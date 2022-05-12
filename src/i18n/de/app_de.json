@@ -11,7 +11,7 @@
     },
 
     "company": {
-        "edit": "Firma bearbeiten",
+        "edit": "Unternehmensinfo bearbeiten",
         "name": "Name",
         "place": "Ort",
         "info": "Info"

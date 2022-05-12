@@ -5,7 +5,6 @@ function _useAppBar() {
     return useContext(AppBarContext);
 };
 
-
 function createActionSetTitle(title: string) {
     return { type: Types.SetTitle, title: title };
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
-import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 // Fehlerhandling
 import { ErrorProvider } from './components/systemMessages/SystemMessagesProvider';

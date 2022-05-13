@@ -8,27 +8,25 @@ import useCompanyStore from './useCompanyStore';
 import useAppBar from '../appBar/useAppBar';
 import useSystemMessages from '../systemMessages/useSystemMessages';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Department, validate } from '../../types/department';
 import setInputChange from '../utils/input-util';
-import Routes from '../utils/routes';
 
-interface RouteParams {
-    id: string
-};
+type RoutingParams = 'id'; // mehrere Parameter: 'id' | 'sort' | 'filter';
 
 export interface IErfassungDepartmentProps {};
 
 export function ErfassungDepartment(props: IErfassungDepartmentProps) {
     
     const { t, i18n } = useTranslation();
-    const history = useHistory();
+    const navigate = useNavigate();
     const infoService = useSystemMessages();
     const appBarService = useAppBar();
     const companyService = useCompanyStore();
     
     // Parameter die vom Routing übergeben werden:
-    const { id } = useParams<RouteParams>();
+    const params = useParams<RoutingParams>();
+    const id = params.id;
 
     const [ data, setData ] = React.useState<Department>();
 
@@ -41,7 +39,7 @@ export function ErfassungDepartment(props: IErfassungDepartmentProps) {
         setFormErrors(new Map<string, string>());
 
         if (!isAddMode) {
-            let department = companyService.getDepartment(id);
+            let department = companyService.getDepartment(id as string);
             if (department !== undefined) {
                 setData(department);
             }
@@ -80,9 +78,9 @@ export function ErfassungDepartment(props: IErfassungDepartmentProps) {
         appBarService.onDelete(
             isAddMode ? undefined : 
             () => {
-                companyService.deleteDepartment(id);
+                companyService.deleteDepartment(id as string);
                 // Navigieren zur Übersicht
-                history.push(Routes.departmentsOverview);
+                navigate('/departments');
 
                 infoService.showInfoMessage(t('form.deletedSuccess'));
         });
@@ -90,7 +88,7 @@ export function ErfassungDepartment(props: IErfassungDepartmentProps) {
         appBarService.onRefresh(
             isAddMode ? undefined :
             () => {
-                setData(companyService.getDepartment(id));
+                setData(companyService.getDepartment(id as string));
 
                 infoService.showInfoMessage(t('form.discard'));
             }

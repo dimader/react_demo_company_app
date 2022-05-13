@@ -6,32 +6,47 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Collapse, ListItemSecondaryAction, Tooltip } from '@material-ui/core';
-import { Link, Switch, Route, useHistory } from 'react-router-dom';
+import { Link, Routes, Route, Outlet, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 // Icons
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import MenuIcon from '@material-ui/icons/Menu';
-import AddIcon from '@material-ui/icons/Add';
 import { Business as BusinessIcon,
     PeopleAlt as EmployeeIcon,
     Domain as DevisionSearchIcon,
-    Home as DevisionIcon 
+    Home as DevisionIcon,
+    EmojiPeople as PeopleIcon,
+    Add as AddIcon,
+    Menu as MenuIcon,
     } from '@material-ui/icons/';
-import PeopleIcon from '@material-ui/icons/EmojiPeople';
-import { useTranslation } from 'react-i18next';
-import Routes from './utils/routes';
 // Seiten
 import { ErfassungCompany } from './company/ErfassungCompany';
 import { ErfassungEmployee } from './company/ErfassungEmployee';
 import { AppBarDashboard } from './appBar/AppBarDashboard';
 import { UebersichtEmployees } from './company/UebersichtEmployee';
-// Store
-import useCompanyStore from './company/useCompanyStore';
 import { ErfassungDepartment } from './company/ErfassungDepartment';
 import { UebersichtDepartments } from './company/UebersichtDepartment';
+// Store
+import useCompanyStore from './company/useCompanyStore';
 // CSS
 import { useStyles } from './styles/useStyles';
 
 export function Dashboard() {
+    return (<Routes>
+        <Route path='/' element={<OuterDashboard />}>
+            <Route path='company' element={<ErfassungCompany />} />
+            <Route path='employees' element={<UebersichtEmployees />} />
+            <Route path='departments' element={<UebersichtDepartments />} />
+
+            <Route path='employee' element={<ErfassungEmployee />} />
+            <Route path='employee/:id' element={<ErfassungEmployee />} />
+
+            <Route path='department' element={<ErfassungDepartment />} />
+            <Route path='department/:id' element={<ErfassungDepartment />} />
+        </Route>
+    </Routes>);
+};
+
+function OuterDashboard() {
     const classes = useStyles();
     const { t } = useTranslation();
     
@@ -39,7 +54,7 @@ export function Dashboard() {
     const [openSubmenuDevision, setOpenSubmenuDevision] = React.useState(true);
 
     const companyService = useCompanyStore();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         // Daten initial laden
@@ -55,10 +70,10 @@ export function Dashboard() {
 
     const handleEmployeeAddClick = () => {
         // Navigieren... 
-        history.push(Routes.employeeNew);
+        navigate('employee');
     };
     const handleDevisionAddClick = () => {
-        history.push(Routes.departmentNew);
+        navigate('department');
     };
 
     return (
@@ -79,7 +94,7 @@ export function Dashboard() {
                 <Divider />
                 
                 <List dense={true}>
-                    <ListItem button component={Link} to={Routes.company}>
+                    <ListItem button component={Link} to='company'>
                         <ListItemIcon>
                             <BusinessIcon />
                         </ListItemIcon>
@@ -107,7 +122,7 @@ export function Dashboard() {
                         <List component='div' disablePadding dense={true}>
 
                             <Tooltip placement='left' title={t('test') as string /* Das ist kein Witz, an dieser Stelle sind das was title erwartet und was t liefert nicht kompatibel! -> https://github.com/mui-org/material-ui/issues/20537 */}>
-                                <ListItem button className={ classes.nested } component={Link} to={Routes.employeesOverview}> 
+                                <ListItem button className={ classes.nested } component={Link} to='employees'> 
                                     <ListItemIcon><MenuIcon /></ListItemIcon>
                                     <ListItemText primary={t('sidebar.table')} />
                                 </ListItem>
@@ -116,7 +131,7 @@ export function Dashboard() {
                             {companyService.getAllEmployees().map((eachData, index) => (
                             
                                 <Tooltip placement='left' title={eachData.name}>
-                                    <ListItem button className={ classes.nested } key={eachData.id} component={Link} to={Routes.employeeEditById(eachData.id)}> 
+                                    <ListItem button className={ classes.nested } key={eachData.id} component={Link} to={'employee/' + eachData.id}> 
                                         <ListItemIcon><EmployeeIcon /></ListItemIcon>
                                         <ListItemText primary={eachData.name} secondary={eachData.info} />
                                     </ListItem>
@@ -148,7 +163,7 @@ export function Dashboard() {
                         <List component='div' disablePadding dense={true}>
 
                             <Tooltip placement='left' title={t('sidebar.showAllTableHint') as string /* Siehe Kommentar oben! */ }>
-                                <ListItem button className={ classes.nested } component={Link} to={Routes.departmentsOverview}> 
+                                <ListItem button className={ classes.nested } component={Link} to='departments'> 
                                     <ListItemIcon><MenuIcon /></ListItemIcon>
                                     <ListItemText primary={t('sidebar.table')} />
                                 </ListItem>
@@ -156,7 +171,7 @@ export function Dashboard() {
 
                             {companyService.getAllDepartments().map((eachData, index) => (
                                 <Tooltip placement='left' title={eachData.name}>
-                                    <ListItem button className={ classes.nested } key={eachData.id} component={Link} to={Routes.departmentEditById(eachData.id)}>
+                                    <ListItem button className={ classes.nested } key={eachData.id} component={Link} to={'department/' + eachData.id}>
                                         <ListItemIcon><DevisionIcon /></ListItemIcon>
                                         <ListItemText primary={eachData.name} secondary={eachData.info} />
                                     </ListItem>
@@ -173,36 +188,7 @@ export function Dashboard() {
 
                 <div className={classes.toolbar} />
 
-                <Switch>
-                    {/* Inhalt des Hauptfensters, routing auf die richtige Komponente */}
-                    <Route exact path={Routes.company}>
-                        <ErfassungCompany />
-                    </Route>
-
-                    <Route exact path={Routes.employeesOverview}>
-                        { /** Übersicht */ }
-                        <UebersichtEmployees />
-                    </Route>
-                    <Route path={Routes.employeeEdit}>
-                        { /** Bearbeitung */ }
-                        <ErfassungEmployee />
-                    </Route>
-                    <Route path={Routes.employeeNew}>
-                        { /** Neuanlage */ }
-                        <ErfassungEmployee />
-                    </Route>
-                    
-                    <Route exact path={Routes.departmentsOverview}>
-                        <UebersichtDepartments />
-                    </Route>
-                    <Route path={Routes.departmentEdit}>
-                        <ErfassungDepartment />
-                    </Route>
-                    <Route path={Routes.departmentNew}>
-                        <ErfassungDepartment />
-                    </Route>
-                    
-                </Switch>
+                <Outlet />
 
             </main>
         </div>

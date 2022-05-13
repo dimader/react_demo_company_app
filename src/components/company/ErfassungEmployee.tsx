@@ -13,26 +13,24 @@ import useCompanyStore from './useCompanyStore';
 import useAppBar from '../appBar/useAppBar';
 import useSystemMessages from '../systemMessages/useSystemMessages';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Employee, EmployeeRoleEnum, validate } from '../../types/employee';
-import Routes from '../utils/routes';
 
-interface RouteParams {
-    id: string
-};
+type RoutingParams = 'id'; // mehrere Parameter: 'id' | 'sort' | 'filter';
 
 export interface IErfassungEmployeeProps {};
 
 export function ErfassungEmployee(props: IErfassungEmployeeProps) {
     
     const { t, i18n } = useTranslation();
-    const history = useHistory();
+    const navigate = useNavigate();
     const infoService = useSystemMessages();
     const appBarService = useAppBar();
     const companyService = useCompanyStore();
     
     // Parameter die vom Routing übergeben werden:
-    const { id } = useParams<RouteParams>();
+    const params = useParams<RoutingParams>();
+    const id = params.id;
 
     const [ data, setData ] = React.useState<Employee>();
 
@@ -45,7 +43,7 @@ export function ErfassungEmployee(props: IErfassungEmployeeProps) {
         setFormErrors(new Map<string, string>());
 
         if (!isAddMode) {
-            let employee = companyService.getEmployee(id);
+            let employee = companyService.getEmployee(id as string);
             if (employee !== undefined) {
                 setData(employee);
             }
@@ -84,9 +82,9 @@ export function ErfassungEmployee(props: IErfassungEmployeeProps) {
         appBarService.onDelete(
             isAddMode ? undefined : 
             () => {
-                companyService.deleteEmployee(id);
+                companyService.deleteEmployee(id as string);
                 // Navigieren zur Übersicht
-                history.push(Routes.employeesOverview);
+                navigate('/employees');
 
                 infoService.showInfoMessage(t('form.deletedSuccess'));
         });
@@ -94,7 +92,7 @@ export function ErfassungEmployee(props: IErfassungEmployeeProps) {
         appBarService.onRefresh(
             isAddMode ? undefined :
             () => {
-                setData(companyService.getEmployee(id));
+                setData(companyService.getEmployee(id as string));
 
                 infoService.showInfoMessage(t('form.discard'));
             }

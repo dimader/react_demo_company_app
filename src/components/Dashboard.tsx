@@ -34,12 +34,12 @@ export function Dashboard() {
     return (<Routes>
         <Route path='/' element={<OuterDashboard />}>
             <Route path='company' element={<ErfassungCompany />} />
+            
             <Route path='employees' element={<UebersichtEmployees />} />
-            <Route path='departments' element={<UebersichtDepartments />} />
-
             <Route path='employee' element={<ErfassungEmployee />} />
             <Route path='employee/:id' element={<ErfassungEmployee />} />
 
+            <Route path='departments' element={<UebersichtDepartments />} />
             <Route path='department' element={<ErfassungDepartment />} />
             <Route path='department/:id' element={<ErfassungDepartment />} />
         </Route>

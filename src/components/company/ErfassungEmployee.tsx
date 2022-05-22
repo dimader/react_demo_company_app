@@ -46,6 +46,8 @@ export function ErfassungEmployee(props: IErfassungEmployeeProps) {
             let employee = companyService.getEmployee(id as string);
             if (employee !== undefined) {
                 setData(employee);
+            } else {
+                infoService.showErrorMessage('Unknown ID.');
             }
         } else {
             setData(undefined);

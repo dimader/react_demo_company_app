@@ -42,6 +42,8 @@ export function ErfassungDepartment(props: IErfassungDepartmentProps) {
             let department = companyService.getDepartment(id as string);
             if (department !== undefined) {
                 setData(department);
+            } else {
+                infoService.showErrorMessage('Unknown ID.');
             }
         } else {
             setData(undefined);

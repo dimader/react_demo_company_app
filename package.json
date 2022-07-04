@@ -2,6 +2,7 @@
   "name": "react_demo_company_app",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://dimader.github.io/react_demo_company_app",
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
     "@material-ui/core": "^4.11.4",
@@ -27,13 +28,16 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
-    "@types/uuid": "^8.3.3"
+    "@types/uuid": "^8.3.3",
+    "gh-pages": "^3.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

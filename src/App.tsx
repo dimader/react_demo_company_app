@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import DateFnsUtils from '@date-io/date-fns';
 import { CssBaseline } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -21,7 +21,7 @@ import { CompanyStore } from './components/company/companyStore';
 function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
+      <HashRouter>
           {/* Alle notwendigen Provider einbinden... */}
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <ErrorProvider>
@@ -39,7 +39,7 @@ function App() {
                 </AppBarProvider>
               </ErrorProvider>
             </MuiPickersUtilsProvider>
-        </BrowserRouter>
+        </HashRouter>
       </ErrorBoundary>
   );
 };
